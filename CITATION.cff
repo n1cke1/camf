@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+title: "CAMF — Carbon Audit Matrix Format: reference implementation"
+message: "If you use this software or the specification, please cite it."
+type: software
+authors:
+  - family-names: Posypanko
+    given-names: Nikolay
+    email: nposypanko@gmail.com
+license: Apache-2.0
+repository-code: "https://github.com/REPLACE-ME/camf"
+abstract: >-
+  A format for publishing a product carbon footprint together with the
+  computation that produced it: the production network as an edge table, the
+  extension vectors and the assumption set, canonically serialised and
+  committed to by a SHA-256 Merkle root, so that any third party can recompute
+  the declared figures exactly.
+keywords:
+  - product carbon footprint
+  - input-output analysis
+  - verification
+  - CBAM

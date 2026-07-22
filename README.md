@@ -87,6 +87,17 @@ Every example and test in this repository runs on synthetic data. No
 enterprise data is present, and none is required to reproduce anything
 published here.
 
-## License
+## Licensing
 
-Apache-2.0.
+Three kinds of content, three licences — see [LICENSES.md](LICENSES.md) for
+the reasoning.
+
+| Content | Licence |
+|---|---|
+| Code (`camf/`, `reproduce.py`, `tests/`) | Apache-2.0 — for the express patent grant and the retaliation clause |
+| Specification text (`spec/`, `README.md`, `audit/`) | CC BY 4.0 — quotable, translatable, includable in regulatory material |
+| Examples and data (`examples/`) | CC0 1.0 — nobody should have to think before running them |
+
+The anonymised copy used for double-blind review is produced by
+`tools/anonymize.sh`; it carries `Anonymous Author(s)` as the copyright line,
+and attribution is restored on publication.
