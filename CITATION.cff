@@ -7,6 +7,14 @@ authors:
     given-names: Nikolay
     email: nposypanko@gmail.com
 license: Apache-2.0
+doi: 10.5281/zenodo.21497211
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.21497211
+    description: "Concept DOI — always resolves to the latest version"
+  - type: doi
+    value: 10.5281/zenodo.21497212
+    description: "DOI of version v0.1.0"
 repository-code: "https://github.com/n1cke1/camf"
 abstract: >-
   A format for publishing a product carbon footprint together with the

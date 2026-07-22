@@ -99,6 +99,13 @@ establishes nothing about the plant.
 
 `audit/opinion_template.md` carries wording that says so explicitly.
 
+## Citing
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21497211.svg)](https://doi.org/10.5281/zenodo.21497211)
+
+Archived on Zenodo. The DOI above is the concept DOI and always resolves to
+the latest version; `CITATION.cff` also records the DOI of each release.
+
 ## Licensing
 
 Three kinds of content, three licences — see [LICENSES.md](LICENSES.md) for
