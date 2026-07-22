@@ -16,11 +16,33 @@ methodological choice. Verification therefore moves from re-testing individual
 products to testing the rules that build `A` and `f`, and a canonical
 serialization makes the result cryptographically attestable.
 
-## Status
+## Try it
 
-Work in progress. Specification and core are in place; the synthetic data
-generator, the diagnostics module and the end-to-end `reproduce.py` are not
-yet written.
+```bash
+pip install -e ".[test]"
+python reproduce.py                    # build a package, hash it, report
+python reproduce.py --verify package   # recompute and compare
+pytest -q
+```
+
+```
+nodes 5   edges 10   declared 1
+package_root  ad711117f6ac75e99d60a1ff8d47777e46d66a0da80870ab074a0b33a75dd1b1
+
+products
+  ALU         15.875135406219  t CO2e / t
+
+diagnostics
+  1. solver_residual                  pass
+  2. mass_balance                     pass
+  3. cone_vs_full                     pass
+  4. inventory_reconciliation         pass
+  5. dangling_leaves                  review
+  6. cycle_productivity               pass
+  7. concentration_and_data_quality   review
+```
+
+## What is here
 
 | | |
 |---|---|
@@ -29,27 +51,23 @@ yet written.
 | `spec/package.schema.json`, `spec/psi.schema.json` | validated in CI |
 | `camf/canon.py` | canonical encoding, RFC 8785 JCS, SHA-256 Merkle |
 | `camf/model.py` | edge table → `A`, upstream cone, sparse LU |
+| `camf/diagnostics.py` | the seven checks |
 | `camf/package.py` | package assembly and manifest |
+| `reproduce.py` | build and verify, end to end |
 | `examples/minimal/` | five nodes, one cycle, solvable by hand |
+| `examples/defects/` | the same network with one thing wrong in each |
 
-## Try it
+Around 350 lines of code in total. That is the point: a reviewer can read all
+of it, which is worth more than a large implementation nobody will ever see.
 
-```bash
-pip install -e ".[test]"
-pytest -q
-```
-
-The minimal example is small enough to check without running anything —
+The minimal example needs no execution to check —
 `examples/minimal/EXPECTED.md` carries the hand solution, the expected
-footprints and the frozen canonical roots.
+footprints, the diagnostic profile and the frozen canonical roots. The cycle
+in it (electricity ⇄ steam) is the case a tree-shaped rollup has to truncate;
+here it closes in one solve.
 
-```python
-from camf import model
-
-m = model.build(model.read_edges_csv("examples/minimal/edges.csv"))
-model.pcf(m, "ALU")        # 15.875135406219
-model.residual(m, "ALU")   # 2.1e-15
-```
+Each file in `examples/defects/` breaks exactly one check, and the test suite
+asserts that the other six stay quiet.
 
 ## What attestation does and does not do
 

@@ -32,6 +32,11 @@
       }
     },
     "materiality_threshold": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
+    "corporate_inventory_co2e": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Externally reported direct-emissions total for the period. The one figure a package carries that is not derived from its own edge table; check 4 reconciles against it."
+    },
     "tolerances": {
       "type": "object",
       "required": ["solver_residual", "cone_vs_full", "declared_pcf"],

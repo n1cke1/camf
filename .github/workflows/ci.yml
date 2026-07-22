@@ -1,0 +1,31 @@
+name: ci
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.10", "3.12"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install -e ".[test]"
+      - run: pytest -q
+      - name: package root is platform independent
+        shell: bash
+        run: |
+          python reproduce.py --out pkg
+          python reproduce.py --verify pkg
+          python - <<'EOF'
+          import json, sys
+          expected = "ad711117f6ac75e99d60a1ff8d47777e46d66a0da80870ab074a0b33a75dd1b1"
+          got = json.load(open("pkg/manifest.json"))["package_root"]
+          print(got)
+          sys.exit(0 if got == expected else 1)
+          EOF

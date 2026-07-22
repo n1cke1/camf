@@ -40,6 +40,9 @@ class Model:
     A: sp.csc_matrix     # a[j,i] = input j per unit output of i
     f_dir: np.ndarray    # direct intensity per unit output
     q: np.ndarray        # gross output per node (0.0 for external leaves)
+    unit: list           # physical unit per node, from its diagonal row
+    dq: list             # data quality label per node, from its diagonal row
+    net_declared: np.ndarray  # net output the declarant records (residual column)
 
 
 def read_edges_csv(path) -> list:
@@ -68,6 +71,8 @@ def build(rows) -> Model:
 
     q = np.zeros(n)
     f_dir = np.zeros(n)
+    unit, dq = [""] * n, [""] * n
+    net_declared = np.zeros(n)
     for r in rows:
         if r[col["product"]] == r[col["component"]]:
             i = index[r[col["product"]]]
@@ -77,6 +82,9 @@ def build(rows) -> Model:
             if q[i] <= 0:
                 raise ValueError(f"non-positive gross output for node {nodes[i]!r}")
             f_dir[i] = r[col["co2e"]] / q[i]
+            unit[i] = r[col["unit"]] or ""
+            dq[i] = r[col["data_quality"]] or ""
+            net_declared[i] = r[col["residual"]]
 
     data, rowi, coli = [], [], []
     for r in rows:
@@ -91,7 +99,7 @@ def build(rows) -> Model:
         coli.append(i)
 
     A = sp.csc_matrix((data, (rowi, coli)), shape=(n, n))
-    return Model(nodes, index, A, f_dir, q)
+    return Model(nodes, index, A, f_dir, q, unit, dq, net_declared)
 
 
 def cone(model: Model, product: str) -> list:

@@ -10,6 +10,7 @@
     "note": "Allocation is endogenous: each node's material balance is taken as recorded, not reconstructed by a methodological choice."
   },
   "materiality_threshold": 0.25,
+  "corporate_inventory_co2e": 980.0,
   "tolerances": {
     "solver_residual": 1e-06,
     "cone_vs_full": 1e-09,

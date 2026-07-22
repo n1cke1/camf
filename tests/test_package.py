@@ -10,7 +10,7 @@ MINIMAL = Path(__file__).resolve().parents[1] / "examples" / "minimal"
 # Frozen in examples/minimal/EXPECTED.md. A change here means the
 # canonicalization rules changed and the spec version must move with them.
 EDGES_ROOT = "7b9391f006843ceacdbb963bddf70eb6ad6b0ec95cfd6b749048f7023449087f"
-PSI_ROOT = "57fcde11fb9f440fa4f1721bc1b4edb368e4e9d8940728c5dcb8a97bc5b2eacf"
+PSI_ROOT = "321b90f45da7b701bd8fbf0ed06489e377ed7c48b8b4979ca638717974b10f9b"
 
 
 @pytest.fixture(scope="module")

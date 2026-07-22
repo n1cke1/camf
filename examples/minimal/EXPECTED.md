@@ -53,9 +53,37 @@ Canonical roots per `spec/canonicalization.md`:
 
 ```
 edges  (10 rows)   7b9391f006843ceacdbb963bddf70eb6ad6b0ec95cfd6b749048f7023449087f
-psi    (900 bytes) 57fcde11fb9f440fa4f1721bc1b4edb368e4e9d8940728c5dcb8a97bc5b2eacf
+psi    (931 bytes) 321b90f45da7b701bd8fbf0ed06489e377ed7c48b8b4979ca638717974b10f9b
+package_root       ad711117f6ac75e99d60a1ff8d47777e46d66a0da80870ab074a0b33a75dd1b1
 ```
 
-`package_root` is fixed once `diagnostics.json` is generated — it commits to
-the diagnostic profile as well, so it is recorded when the diagnostics module
-lands.
+`package_root` commits to the diagnostic profile as well as to the edge table
+and the assumptions: changing any one of the three changes it.
+
+## Expected diagnostics
+
+```
+1. solver_residual                  pass
+2. mass_balance                     pass
+3. cone_vs_full                     pass
+4. inventory_reconciliation         pass     980 t declared, 980 t in matrix
+5. dangling_leaves                  review   1: COAL
+6. cycle_productivity               pass      ρ = 0.0548
+7. concentration_and_data_quality   review
+```
+
+Net output is not a mass-balance gap: ALU leaves the system entirely and PWR
+is partly exported, both declared in the `residual` column. Check 2 tests the
+part that column does *not* explain.
+
+## Defect variants
+
+`examples/defects/` holds the same network with one thing wrong in each, and
+each is caught by exactly one check:
+
+| File | Change | Caught by |
+|---|---|---|
+| `cycle_nonproductive.csv` | PWR draws 8 000 Gcal of steam per 1 000 MWh | 6 — ρ = 1.095, everything downstream reported `not_evaluated` |
+| `mass_gap.csv` | alumina output doubled, declared net output untouched | 2 — 50% unexplained |
+| `missing_source.csv` | steam combustion under-reported by 30 t | 4 — matrix 950 t against inventory 980 t |
+| `dangling.csv` | an alloy input consumed but never produced | 5 — surfaced for review, not a failure |

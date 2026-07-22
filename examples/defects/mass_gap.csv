@@ -1,0 +1,11 @@
+plant,product,component,period,unit,coefficient,data_quality,method,params,emission_formula,co2e,S1,S2,S3,CBAM_d,CBAM_i,produced_qty,consumed_total,residual,legal_entity
+P01,PWR,PWR,2025-01/2025-12,MWh,-1000.0,M,combustion,NCV=20.9;EF_CO2=94.6;OF=0.98,Activity x NCV x EF x OF,900.0,1,0,0,0,1,1000.0,880.0,120.0,LE1
+P01,PWR,COAL,2025-01/2025-12,t,400.0,M,,,,0.0,0,0,1,0,0,0.0,0.0,0.0,LE1
+P01,PWR,STM,2025-01/2025-12,Gcal,20.0,C,,,,0.0,0,0,0,0,0,0.0,0.0,0.0,LE1
+P01,STM,STM,2025-01/2025-12,Gcal,-200.0,M,combustion,NCV=33.5;EF_CO2=56.1;OF=0.995,Activity x NCV x EF x OF,50.0,1,0,0,0,1,200.0,20.0,180.0,LE1
+P01,STM,PWR,2025-01/2025-12,MWh,30.0,M,,,,0.0,0,0,0,0,0,0.0,0.0,0.0,LE1
+P02,ALO,ALO,2025-01/2025-12,t,-400.0,M,mass-balance,,Process material balance,20.0,1,0,0,1,0,400.0,190.0,10.0,LE2
+P02,ALO,PWR,2025-01/2025-12,MWh,150.0,M,,,,0.0,0,0,0,0,0,0.0,0.0,0.0,LE2
+P02,ALU,ALU,2025-01/2025-12,t,-50.0,M,mass-balance,,Process material balance,10.0,1,0,0,1,0,50.0,0.0,50.0,LE2
+P02,ALU,ALO,2025-01/2025-12,t,190.0,M,,,,0.0,0,0,0,0,0,0.0,0.0,0.0,LE2
+P02,ALU,PWR,2025-01/2025-12,MWh,700.0,M,,,,0.0,0,0,0,0,0,0.0,0.0,0.0,LE2
