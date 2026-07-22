@@ -87,6 +87,18 @@ Every example and test in this repository runs on synthetic data. No
 enterprise data is present, and none is required to reproduce anything
 published here.
 
+## For auditors
+
+`audit/checklist.md` separates what the package proves from what it cannot.
+Part A — commitment, schema, derivation, residual, cone identity, cycle
+productivity — runs in seconds and needs nothing but the package. Part B is
+the substantive work at the declarant: sampling the concentrated edges against
+ERP transactions, evidencing measurement labels, confirming that every
+dangling leaf is a genuinely purchased input. Passing Part A without Part B
+establishes nothing about the plant.
+
+`audit/opinion_template.md` carries wording that says so explicitly.
+
 ## Licensing
 
 Three kinds of content, three licences — see [LICENSES.md](LICENSES.md) for
