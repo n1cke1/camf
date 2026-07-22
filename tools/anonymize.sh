@@ -49,6 +49,26 @@ authors:
 license: Apache-2.0
 EOF
 
+# Sections that describe the anonymisation itself are signposts: accepting a
+# residual risk of deanonymisation is one thing, handing a reviewer the route
+# is another. Both blocks below name where the identified copy lives.
+python - <<'PY'
+import pathlib, re
+lic = pathlib.Path("LICENSES.md")
+t = lic.read_text(encoding="utf-8")
+t = re.sub(r"\n## Publication order\n.*?(?=\n## |\Z)", "\n", t, flags=re.S)
+lic.write_text(t, encoding="utf-8", newline="")
+
+rd = pathlib.Path("README.md")
+t = rd.read_text(encoding="utf-8")
+t = re.sub(r"\nThe anonymised copy used for double-blind review is produced by\n"
+           r"`tools/anonymize\.sh`; it carries `Anonymous Author\(s\)` as the copyright line,\n"
+           r"and attribution is restored on publication\.\n",
+           "\nThis copy is anonymised for review: the copyright line reads\n"
+           "`Anonymous Author(s)` and attribution is restored on publication.\n", t)
+rd.write_text(t, encoding="utf-8", newline="")
+PY
+
 # Anything that still names the author, the affiliation, a machine or an
 # account is a hard stop -- the mirror is not written unless the tree is clean.
 PATTERNS='claude|anthropic|Posypanko|posypanko|nposypanko|Eurasian|\bERG\b|winkers|\.mcp|/Users/|C:\\\\'
