@@ -7,7 +7,7 @@ authors:
     given-names: Nikolay
     email: nposypanko@gmail.com
 license: Apache-2.0
-repository-code: "https://github.com/REPLACE-ME/camf"
+repository-code: "https://github.com/n1cke1/camf"
 abstract: >-
   A format for publishing a product carbon footprint together with the
   computation that produced it: the production network as an edge table, the
