@@ -53,20 +53,49 @@ EOF
 # residual risk of deanonymisation is one thing, handing a reviewer the route
 # is another. Both blocks below name where the identified copy lives.
 python - <<'PY'
-import pathlib, re
-lic = pathlib.Path("LICENSES.md")
-t = lic.read_text(encoding="utf-8")
-t = re.sub(r"\n## Publication order\n.*?(?=\n## |\Z)", "\n", t, flags=re.S)
-lic.write_text(t, encoding="utf-8", newline="")
+import pathlib, re, sys
 
-rd = pathlib.Path("README.md")
-t = rd.read_text(encoding="utf-8")
-t = re.sub(r"\nThe anonymised copy used for double-blind review is produced by\n"
-           r"`tools/anonymize\.sh`; it carries `Anonymous Author\(s\)` as the copyright line,\n"
-           r"and attribution is restored on publication\.\n",
-           "\nThis copy is anonymised for review: the copyright line reads\n"
-           "`Anonymous Author(s)` and attribution is restored on publication.\n", t)
-rd.write_text(t, encoding="utf-8", newline="")
+def sub(path, pattern, repl, flags=0, required=True):
+    p = pathlib.Path(path)
+    t = p.read_text(encoding="utf-8")
+    new = re.sub(pattern, repl, t, flags=flags)
+    if required and new == t:
+        sys.exit(f"anonymisation: pattern not found in {path}: {pattern[:60]}")
+    p.write_text(new, encoding="utf-8", newline="")
+
+# The citation block carries a DOI badge, and the DOI resolves straight to a
+# record bearing the author's name. It is a link, not a hint.
+sub("README.md", r"\n## Citing\n.*?(?=\n## )", "\n", flags=re.S)
+sub("README.md",
+    r"\nThe anonymised copy used for double-blind review is produced by\n"
+    r"`tools/anonymize\.sh`; it carries `Anonymous Author\(s\)` as the copyright line,\n"
+    r"and attribution is restored on publication\.\n",
+    "\nThis copy is anonymised for review: the copyright line reads\n"
+    "`Anonymous Author(s)` and attribution is restored on publication.\n")
+sub("LICENSES.md", r"\n## Publication order\n.*?(?=\n## |\Z)", "\n", flags=re.S)
+sub("LICENSES.md",
+    r"The canonical repository carries the real copyright line; the review mirror\n"
+    r"derived from it carries",
+    "This review copy carries")
+sub("CHANGELOG.md", r"\n- `tools/anonymize\.sh` — derives the double-blind review mirror from the named\n  repository\.\n", "\n")
+sub("NOTICE",
+    r"publication\. The work is protected as an anonymous work under the Berne\n"
+    r"Convention; the named repository and the archived release carry the authors'\n"
+    r"identity\.\n",
+    "publication. The work is protected as an anonymous work under the Berne\nConvention.\n")
+
+# Enforced, not remembered: anything that could route a reviewer to the
+# identified copy fails the build.
+markers = re.compile(r"zenodo|10\.5281|github\.com|anonymize\.sh", re.I)
+for f in pathlib.Path(".").rglob("*"):
+    if f.is_file() and ".git" not in f.parts:
+        try:
+            text = f.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+        for n, line in enumerate(text.splitlines(), 1):
+            if markers.search(line):
+                sys.exit(f"anonymisation: route to the identified copy at {f}:{n}: {line.strip()[:80]}")
 PY
 
 # Anything that still names the author, the affiliation, a machine or an
