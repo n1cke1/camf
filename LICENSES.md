@@ -36,11 +36,11 @@ specification, that is negligible.
 ## Copyright line and anonymity
 
 Both MIT and Apache require a copyright line, and a name breaks blind review.
-This repository is the named, canonical one and carries the real copyright
-line; the review mirror produced by `tools/anonymize.sh` carries
-`Copyright 2026 Anonymous Author(s)`, with attribution restored on
-publication. An anonymous work is fully protected under the Berne Convention,
-so nothing is given up by withholding the name for the review period.
+The canonical repository carries the real copyright line; the review mirror
+derived from it carries `Copyright 2026 Anonymous Author(s)`, with attribution
+restored on publication. An anonymous work is fully protected under the Berne
+Convention, so nothing is given up by withholding the name for the review
+period.
 
 ## Publication order
 
