@@ -57,8 +57,9 @@ diagnostics
 | `examples/minimal/` | five nodes, one cycle, solvable by hand |
 | `examples/defects/` | the same network with one thing wrong in each |
 
-Around 350 lines of code in total. That is the point: a reviewer can read all
-of it, which is worth more than a large implementation nobody will ever see.
+Under 500 lines of code, with another 320 of tests. That is the point: a
+reviewer can read all of it, which is worth more than a large implementation
+nobody will ever see.
 
 The minimal example needs no execution to check —
 `examples/minimal/EXPECTED.md` carries the hand solution, the expected
