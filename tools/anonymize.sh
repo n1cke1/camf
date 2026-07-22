@@ -51,7 +51,7 @@ EOF
 
 # Anything that still names the author, the affiliation, a machine or an
 # account is a hard stop -- the mirror is not written unless the tree is clean.
-PATTERNS='Posypanko|posypanko|nposypanko|Eurasian|\bERG\b|winkers|\.mcp|/Users/|C:\\\\'
+PATTERNS='claude|anthropic|Posypanko|posypanko|nposypanko|Eurasian|\bERG\b|winkers|\.mcp|/Users/|C:\\\\'
 if grep -rInE --binary-files=without-match "$PATTERNS" . ; then
   echo "ANONYMISATION FAILED: the matches above must be removed" >&2
   exit 1
