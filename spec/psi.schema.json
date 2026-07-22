@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/camf/1.0/psi.schema.json",
+  "title": "CAMF assumption set (psi)",
+  "description": "Everything a verifier needs that is not a number in the edge table: which factors were used and where they came from, how allocation was handled, what the masks mean, and the tolerances the declaration is asserted within.",
+  "type": "object",
+  "required": ["format", "gwp", "allocation", "tolerances", "emission_factors"],
+  "additionalProperties": false,
+  "properties": {
+    "format": { "const": "camf/1.0" },
+    "period": { "type": "string" },
+    "gwp": {
+      "type": "object",
+      "required": ["set", "horizon_years"],
+      "additionalProperties": false,
+      "properties": {
+        "set": { "type": "string", "examples": ["IPCC AR5", "IPCC AR6"] },
+        "horizon_years": { "type": "integer", "enum": [20, 100] }
+      }
+    },
+    "allocation": {
+      "type": "object",
+      "required": ["rule"],
+      "additionalProperties": false,
+      "properties": {
+        "rule": {
+          "type": "string",
+          "enum": ["node-material-balance", "physical", "economic", "subdivision"],
+          "description": "node-material-balance means allocation is endogenous: each node's balance is taken as recorded."
+        },
+        "note": { "type": "string" }
+      }
+    },
+    "materiality_threshold": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
+    "tolerances": {
+      "type": "object",
+      "required": ["solver_residual", "cone_vs_full", "declared_pcf"],
+      "additionalProperties": false,
+      "properties": {
+        "solver_residual": { "type": "number", "exclusiveMinimum": 0 },
+        "cone_vs_full": { "type": "number", "exclusiveMinimum": 0 },
+        "declared_pcf": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "scope_masks": {
+      "type": "object",
+      "description": "What each mask asserts, in words. The masks themselves live in the edge table.",
+      "additionalProperties": { "type": "string" }
+    },
+    "emission_factors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "value", "unit", "source", "version", "data_quality"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "value": { "type": "number" },
+          "unit": { "type": "string" },
+          "source": {
+            "type": "string",
+            "description": "Citable origin. A factor without an attributable source cannot be verified and must be marked data_quality D."
+          },
+          "version": { "type": "string" },
+          "data_quality": { "type": "string", "enum": ["M", "C", "E", "D"] }
+        }
+      }
+    }
+  }
+}

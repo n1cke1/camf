@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/camf/1.0/package.schema.json",
+  "title": "CAMF package manifest",
+  "type": "object",
+  "required": ["format", "hash_algorithm", "merkle", "objects", "package_root"],
+  "additionalProperties": false,
+  "properties": {
+    "format": { "const": "camf/1.0" },
+    "hash_algorithm": { "const": "SHA-256" },
+    "period": {
+      "type": "string",
+      "description": "ISO 8601 interval, e.g. 2025-01/2025-12"
+    },
+    "merkle": {
+      "type": "object",
+      "required": ["chunk_rows", "odd_node"],
+      "additionalProperties": false,
+      "properties": {
+        "chunk_rows": { "type": "integer", "const": 10000 },
+        "odd_node": { "const": "promote" }
+      }
+    },
+    "objects": {
+      "type": "array",
+      "minItems": 2,
+      "description": "Every hashed artefact. Sorted by name; manifest itself excluded.",
+      "items": {
+        "type": "object",
+        "required": ["name", "role", "kind", "root"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+          "role": { "type": "string", "enum": ["A,y", "f_k", "psi", "profile", "demand"] },
+          "kind": { "type": "string", "enum": ["table", "json"] },
+          "rows": { "type": "integer", "minimum": 0 },
+          "bytes": { "type": "integer", "minimum": 0 },
+          "root": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "kind": { "const": "table" } } },
+            "then": { "required": ["rows"] }
+          },
+          {
+            "if": { "properties": { "kind": { "const": "json" } } },
+            "then": { "required": ["bytes"] }
+          }
+        ]
+      }
+    },
+    "products": {
+      "type": "array",
+      "description": "Declared products. Absent means no per-unit declaration is made.",
+      "items": {
+        "type": "object",
+        "required": ["code", "unit", "pcf"],
+        "additionalProperties": false,
+        "properties": {
+          "code": { "type": "string" },
+          "unit": { "type": "string" },
+          "pcf": { "type": "number" },
+          "scope": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "S1": { "type": "number" },
+              "S2": { "type": "number" },
+              "S3": { "type": "number" }
+            }
+          }
+        }
+      }
+    },
+    "package_root": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

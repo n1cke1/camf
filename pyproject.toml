@@ -1,0 +1,19 @@
+[project]
+name = "camf"
+version = "0.1.0.dev0"
+description = "Carbon Audit Matrix Format — reference implementation"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24", "scipy>=1.10"]
+
+[project.optional-dependencies]
+test = ["pytest>=7", "jsonschema>=4.18"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["camf"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,41 @@
+{
+  "format": "camf/1.0",
+  "period": "2025-01/2025-12",
+  "gwp": {
+    "set": "IPCC AR6",
+    "horizon_years": 100
+  },
+  "allocation": {
+    "rule": "node-material-balance",
+    "note": "Allocation is endogenous: each node's material balance is taken as recorded, not reconstructed by a methodological choice."
+  },
+  "materiality_threshold": 0.25,
+  "tolerances": {
+    "solver_residual": 1e-06,
+    "cone_vs_full": 1e-09,
+    "declared_pcf": 1e-06
+  },
+  "scope_masks": {
+    "S1": "Direct emissions of nodes owned by the declaring group",
+    "S2": "Purchased energy carried by nodes with no upstream production row",
+    "S3": "Embedded carbon of purchased inputs (dangling leaves)"
+  },
+  "emission_factors": [
+    {
+      "id": "EF_COAL_CO2",
+      "value": 94.6,
+      "unit": "t CO2 / TJ",
+      "source": "IPCC 2006 Guidelines, Vol. 2, Table 1.4",
+      "version": "2006",
+      "data_quality": "D"
+    },
+    {
+      "id": "EF_GAS_CO2",
+      "value": 56.1,
+      "unit": "t CO2 / TJ",
+      "source": "IPCC 2006 Guidelines, Vol. 2, Table 1.4",
+      "version": "2006",
+      "data_quality": "D"
+    }
+  ]
+}
