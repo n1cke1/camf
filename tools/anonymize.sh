@@ -25,6 +25,7 @@ git -C "$SRC" archive HEAD | tar -x -C "$DEST"          # tracked files only, no
 
 cd "$DEST"
 rm -rf tools                                             # this script names the author
+rm -f .zenodo.json                                       # archive metadata: names the author, useless to a reviewer
 
 # Copyright lines
 sed -i "s/Copyright \(20[0-9][0-9]\) $REAL_NAME/Copyright \1 $ANON/" LICENSE NOTICE
@@ -41,7 +42,7 @@ EOF
 # the schema, so it is replaced wholesale.
 cat > CITATION.cff <<'EOF'
 cff-version: 1.2.0
-title: "CAMF — Carbon Audit Matrix Format: reference implementation"
+title: "Carbon Audit Matrix Format (CAMF): a self-verifiable specification for product carbon footprint declarations"
 message: "Anonymised copy for double-blind review."
 type: software
 authors:
