@@ -1,12 +1,15 @@
 cff-version: 1.2.0
-title: "CAMF — Carbon Audit Matrix Format: reference implementation"
+title: "Carbon Audit Matrix Format (CAMF): a self-verifiable specification for product carbon footprint declarations"
 message: "If you use this software or the specification, please cite it."
 type: software
 authors:
   - family-names: Posypanko
     given-names: Nikolay
     email: nposypanko@gmail.com
-license: Apache-2.0
+license:
+  - Apache-2.0
+  - CC-BY-4.0
+  - CC0-1.0
 doi: 10.5281/zenodo.21497211
 identifiers:
   - type: doi

@@ -1,0 +1,17 @@
+{
+  "title": "Carbon Audit Matrix Format (CAMF): a self-verifiable specification for product carbon footprint declarations",
+  "upload_type": "software",
+  "creators": [
+    { "name": "Posypanko, Nikolay" }
+  ],
+  "license": "apache-2.0",
+  "description": "<p>CAMF is a format for publishing a product carbon footprint together with the computation that produced it: the production network as a table of edges, the extension vectors and the assumption set, canonically serialised and committed to by a SHA-256 Merkle root, so that any third party can recompute the declared figures exactly.</p><p>The deposit contains the normative specification (<code>spec/CAMF-1.0.md</code>, <code>spec/canonicalization.md</code>, JSON Schemas), a reference implementation under 500 lines, seven diagnostic checks, a worked example solvable by hand, four defect variants each caught by exactly one check, and an auditor checklist.</p><p><strong>Licensing by content type:</strong> code (<code>camf/</code>, <code>reproduce.py</code>, <code>tests/</code>) under Apache-2.0, for its express patent grant and retaliation clause; specification text (<code>spec/</code>, <code>README.md</code>, <code>audit/</code>) under CC BY 4.0, so it can be quoted, translated and included in regulatory material; examples and data (<code>examples/</code>) under CC0 1.0. See <code>LICENSES.md</code>.</p><p>Published as a defensive publication.</p>",
+  "keywords": [
+    "product carbon footprint",
+    "input-output analysis",
+    "Leontief inverse",
+    "verification",
+    "cryptographic attestation",
+    "CBAM"
+  ]
+}
